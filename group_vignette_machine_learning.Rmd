@@ -1,0 +1,18 @@
+---
+title: "machine_learning_group_vignette"
+author: "Emiley Garcia-Zych"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Group Vignette - Introduction to Machine Learning 
+
+## Preliminaries 
+
+-   Install these packages in ***R:*** { }, { }, { }, { }
+
+## Objectives
+
+> The objective of this module is to demonstrate an applied example of machine learning via logistic regression. This module contains exercises to provide opportunities to apply machine learning.
+>
+> To complete this module, one is expected to have prior knowledge/familiarity with R syntax and logistic regression.
