@@ -9,10 +9,15 @@ output: html_document
 
 ## Preliminaries 
 
--   Install these packages in ***R:*** { }, { }, { }, { }
+Install these packages in ***R:*** {caret}, {dplyr}, {ggplot2}, {rsample}
 
 ## Objectives
 
-> The objective of this module is to demonstrate an applied example of machine learning via logistic regression. This module contains exercises to provide opportunities to apply machine learning.
+>The objective of this module is to demonstrate an applied example of machine learning via logistic regression. This module contains exercises to provide opportunities to apply machine learning.
 >
 > To complete this module, one is expected to have prior knowledge/familiarity with R syntax and logistic regression.
+
+## Introduction
+> Do you use Siri, Alexa, Google, or Cortana? These are examples of artificial intelligence that rely on machine learning. Artificial intelligence refers to systems or machines that parallel human intelligence. Machine learning is a subdivision of artificial intelligence, and sometimes the terms are used interchangeably. It must be noted that, while all machine learning is artificial intelligence, not all artificial intelligence is machine learning. In addition to digital voice assistants, machine learning can be used for social network analytics, embedding interactive visual graphics, getting insight into the behavior of users, analyzing trends and patterns, and developing analytical solutions. Many of these applications are used by large companies such as Google, Facebook, Microsoft, and Amazon. 
+> We see examples of machine learning in our everyday lives. On social media, recommendations of “people you may know,” targeted website ads for something you might’ve previously searched for or talked about, or when YouTube suggests another video saying “You May Also Like This” are all powered by machine learning. 
+
