@@ -1592,11 +1592,16 @@ anomaly detection, and recommendation.</p>
 <div id="general-process" class="section level3">
 <h3>General Process</h3>
 <blockquote>
-<p>1.Clean the data obtained from the training dataset<br />
-2. Form a proper algorithm for building a prediction model<br />
-3. Train the machine and model to understand the pattern of the
+<ol style="list-style-type: decimal">
+<li>Clean the data obtained from the training dataset<br />
+</li>
+<li>Form a proper algorithm for building a prediction model<br />
+</li>
+<li>Train the machine and model to understand the pattern of the
 dataset/project<br />
-4. Predict your results more efficiently and with higher accuracy</p>
+</li>
+<li>Predict your results more efficiently and with higher accuracy</li>
+</ol>
 </blockquote>
 </div>
 <div id="what-is-logistic-regression" class="section level3">
@@ -1610,6 +1615,48 @@ relationship between continuous variables and a set of continuous
 predictor variables. Using the slope and intercept of the training
 data’s regression, the machine can predict outcomes from given input or
 predictor variables.</p>
+</blockquote>
+</div>
+</div>
+<div id="testing-the-model" class="section level2">
+<h2>Testing the Model</h2>
+<div id="introduction-1" class="section level3">
+<h3>Introduction</h3>
+<blockquote>
+<p>Model testing is an important part in machine learning. It allows you
+to find problem or concern that may affect the prediction capability and
+accuracy. Knowing what and why the model is failing is always
+beneficial. Model testing and evaluation are very similar, while model
+testing usually perform certain tests aiming to test a particular issue
+in the model.</p>
+</blockquote>
+</div>
+<div id="data-splitting-move-forward-before-training-part" class="section level3">
+<h3>Data Splitting <strong><em>(move forward before training
+part)</em></strong></h3>
+<blockquote>
+<p>To test the model, we need to split the data into training set and
+testing set at the beginning of the modeling process. The test set
+should not be used prior to selection of the final model. The proportion
+of the data for testing purpose should be in the range of 20% to 40%.
+Spending too much in training or testing will not allow us to make a
+nice and generalizable model.</p>
+</blockquote>
+</div>
+<div id="testing-model" class="section level3">
+<h3>Testing Model</h3>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>Calculate the model results to the data points in the testing data
+set. Use the test data as imput for the model to generate predictions.
+Perform this task using the highest performing model from the validation
+phase. You should have both the real values and the model’s
+corresponding predictions for each input data instance in the data
+set.</li>
+<li>Compute statistical values comparing the model results to the test
+data. Check to ensure the model fits the test data set closely enough to
+be satisfactory.</li>
+</ol>
 </blockquote>
 </div>
 </div>

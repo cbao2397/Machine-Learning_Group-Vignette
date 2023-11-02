@@ -21,7 +21,7 @@ output:
 <center>
   <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/VirtualAssis.jpg?raw=true" alt="Siri, Alexa, Google." width=60%>
   <figcaption>Siri, Alexa, Google. (Image from https://www.gearpatrol.com/tech/a369922/how-does-a-virtual-assistant-work/)</figcaption>
-</center> 
+</center>
 
 ## Introduction
 > Do you use Siri, Alexa, Google, or Cortana? These are examples of artificial intelligence that rely on machine learning. Artificial intelligence refers to systems or machines that parallel human intelligence. Machine learning is a subdivision of artificial intelligence, and sometimes the terms are used interchangeably. It must be noted that, while all machine learning is artificial intelligence, not all artificial intelligence is machine learning. In addition to digital voice assistants, machine learning can be used for social network analytics, embedding interactive visual graphics, getting insight into the behavior of users, analyzing trends and patterns, and developing analytical solutions. Many of these applications are used by large companies such as Google, Facebook, Microsoft, and Amazon. 
@@ -41,7 +41,7 @@ output:
 > R has an expansive public domain of tools and packages to work with machine learning. Machine learning in R is useful for dealing with large amounts of data, it helps identify relationships in datasets to inform decision-making, and the machine can learn from itself to improve automatically. There are many different types of problems that machine learning can solve: regression, classification, association, clustering, anomaly detection, and recommendation. 
 
 ### General Process
-> 1.Clean the data obtained from the training dataset  
+> 1. Clean the data obtained from the training dataset  
 > 2. Form a proper algorithm for building a prediction model  
 > 3. Train the machine and model to understand the pattern of the dataset/project  
 > 4. Predict your results more efficiently and with higher accuracy  
@@ -49,3 +49,14 @@ output:
 ### What is Logistic Regression?
 > The regression technique helps the machine predict continuous values, which is a type of supervised machine learning. Regression is a classic form of statistical modeling and one of the simplest tests for machine learning. Logistic regression is used to approximate the linear relationship between continuous variables and a set of continuous predictor variables. Using the slope and intercept of the training data’s regression, the machine can predict outcomes from given input or predictor variables. 
 
+## Testing the Model
+
+### Introduction
+> Model testing is an important part in machine learning. It allows you to find problem or concern that may affect the prediction capability and accuracy. Knowing what and why the model is failing is always beneficial. Model testing and evaluation are very similar, while model testing usually perform certain tests aiming to test a particular issue in the model. 
+
+### Data Splitting ***(move forward before training part)***
+> To test the model, we need to split the data into training set and testing set at the beginning of the modeling process. The test set should not be used prior to selection of the final model. The proportion of the data for testing purpose should be in the range of 20% to 40%. Spending too much in training or testing will not allow us to make a nice and generalizable model. 
+
+### Testing Model
+> 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
+> 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory. 
