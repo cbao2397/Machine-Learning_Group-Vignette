@@ -18,7 +18,10 @@ output:
 >
 > To complete this module, one is expected to have prior knowledge/familiarity with R syntax and logistic regression.
 
-![Siri, Alexa, Google. (Image from https://www.gearpatrol.com/tech/a369922/how-does-a-virtual-assistant-work/)](/Users/juliannadick/desktop/digital assistant.png)
+<center>
+  <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/VirtualAssis.jpg?raw=true" alt="Siri, Alexa, Google." width=60%>
+  <figcaption>Siri, Alexa, Google. (Image from https://www.gearpatrol.com/tech/a369922/how-does-a-virtual-assistant-work/)</figcaption>
+</center> 
 
 ## Introduction
 > Do you use Siri, Alexa, Google, or Cortana? These are examples of artificial intelligence that rely on machine learning. Artificial intelligence refers to systems or machines that parallel human intelligence. Machine learning is a subdivision of artificial intelligence, and sometimes the terms are used interchangeably. It must be noted that, while all machine learning is artificial intelligence, not all artificial intelligence is machine learning. In addition to digital voice assistants, machine learning can be used for social network analytics, embedding interactive visual graphics, getting insight into the behavior of users, analyzing trends and patterns, and developing analytical solutions. Many of these applications are used by large companies such as Google, Facebook, Microsoft, and Amazon. 
