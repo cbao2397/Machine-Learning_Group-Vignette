@@ -49,13 +49,158 @@ output:
 ### What is Logistic Regression?
 > The regression technique helps the machine predict continuous values, which is a type of supervised machine learning. Regression is a classic form of statistical modeling and one of the simplest tests for machine learning. Logistic regression is used to approximate the linear relationship between continuous variables and a set of continuous predictor variables. Using the slope and intercept of the training data’s regression, the machine can predict outcomes from given input or predictor variables. 
 
+## Training the Model
+
+>In order to produce a well-crafted, working model it is important to use the data wisely for the learning and validation procedures. This includes proper pre-processing for the feature and target variables while also minimizing data leakage. Finally, after you have completed this we can assess the model performance. 
+
+>*Although we focus on supervised learning, these techniques can also be applied to the unsupervised learning later in the module.
+
+>An example of how this model teaching works is shown below:
+
+<center>
+  <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/Model%20Diagram.jpg" alt="Model Diagram" width=60%>
+  <figcaption>Modeling Diagram (Image from https://bradleyboehmke.github.io/HOML/index.html#software-information)</figcaption>
+</center>
+
+>This image shows the general predictive machine learning process where an optimal model is created by running the process repeatedly until it can be applied back to the testing data.
+
+>We will be using the Heart Disease Dataset for teaching our model with supervised learning:
+
+```{r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/cbao2397/DataStorage/main/moreprocessed.cleveland.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d) #loads in dataset
+```
+
+
+>There is some pre-processing we must conduct since there are missing values. The instructions for this are here, but we will also show them:
+
+{pre-processing package load in}
+{pre-processing code}
+
+### Data Splitting
+
+>One of the goals we have for machine learning is to find the algorithm f(X) that will accurately predict a future value or values (Yhat) based on a group of features (X). This algorithm fits past data but will also predict future outcomes using it’s learning from that previous data. This is called *generalizability*. Meaning how well we use our data to teach helps us understand how best the algorithm generalizes to unseen data. Think about our fight or flight response and how this became a learned adaptation. We first encountered something dangerous, and we either fought or fled. Let’s say someone encountered a bear in the woods for the first time, their body entered flight mode and they ran (Don’t actually do this if you encounter a bear!). They quickly discover running from the bear may lead to it chasing after them. Therefore, the next time they enter the woods, they may think about encountering a bear and they will likely not choose to flee, because that model did not work well for them, so they may alter the model to not flee but to make themselves look big and make really loud noises like dog barks, which successfully scares away the bear. The choice of fight or flight in this case is our *training set* and the final choice of model being to make ourselves big and bark like a dog is our *test set*. Basically:
+**Training set**- used to develop groups of features that train the algorithms, tune hyperparameters, compare models, and other choices that lead to choosing a final model (Ex. the model that wants to be reproduced)
+**Test set**- once the final model is chosen, this is the data used to estimate unbiased assessment of the model’s performance, which is also referred to as the *generalization error*. It is important this set does not get used while training your model since then it becomes part of the testing data and affects how well the model actually predicts data.
+
+>Generally, the best split between the two is 60% training data and 40% testing data, because if you spend too much on training then you are not getting a valid assessment on the predictive performance (aka not generalizable). In contrast, too much spent on testing does not allow a good assessment of model parameters. Smaller training samples are often used for the sake of computation speed, but a general rule is p≥n (where p is the number of features and n is sample size). 
+
+>Data can be split in two ways: Simple Random Sampling and Stratified Sampling
+
+### Simple Random Sampling
+
+>We have used random sampling in previous modules, so it follows a similar pattern here. Remember you can use set.seed() to make the sample reproducible. There are a few ways to do this, one in base R, one using the caret package that we use for the Heart Disease dataset, and one using the rsample package. It is largely dependent on what applies best to your chosen dataset.
+
+>Let us take a 60-40 split through simple random sampling:
+
+```{r}
+library(caret)
+library(rsample) #load in the necessary packages
+
+# Using base R for random sampling
+set.seed(123)  # for reproducibility of the random sample
+index_1 <- sample(1:nrow(d), round(nrow(d) * 0.6)) #indicates we are taking from dataset d, by row and rounding and the 0.6 shows we are taking a 60-40 split
+train_1 <- d[index_1, ] #creates our training set which we use for making the model
+test_1  <- d[-index_1, ] #creates our test set which we will test our final model against
+
+# Using caret package for random sampling
+set.seed(123)  # for reproducibility
+index_2 <- createDataPartition(d$age, p = 0.6, 
+                               list = FALSE) #let us sample by age
+train_2 <- d[index_2, ]
+test_2  <- d[-index_2, ]
+
+# Using rsample package for random sampling
+set.seed(123)  # for reproducibility
+split_1  <- initial_split(d, prop = 0.6)
+train_3  <- training(split_1)
+test_3   <- testing(split_1)
+```
+
+
+>This sampling size usually results in similar distributions of Y (Ex. Age in the Heart Disease dataset) between training and test sets.
+
+
+### Stratified Sampling
+
+>This type of sampling allows us to control our sample so we guarantee similar Y distributions. This is most commonly used with classification problems where a response variable is skewed (Ex. 90% of answers are “Yes” and 10% are “No”). This technique is also applied to regression problems of datasets with small sample sizes and where responses do not fall within a normal distribution. This implies this type of sampling will be best for our Heart Disease dataset, since it is based on classification, is multivariate, but likely does not follow a normal distribution.
+
+>Since there is a continuous response variable, this sampling technique takes quantiles of the Y and randomly samples within these quantiles. This guarantees we are maintaining an equal representation across the data within our samples. 
+
+{stratified sampling with rsample package?}
+[]
+#stratified sampling with the rsample package
+set.seed(456)
+split_strat  <- initial_split(d, prop = 0.7, 
+                              strata = d$age) #splits the data in stratified units
+train_strat  <- training(split_strat) #our training data
+test_strat   <- testing(split_strat) #our testing data
+] having trouble getting this to work!!!
+
+
+>What do we think happens to our data if we did not take representative samples from each quantile?
+
+
+### Creating models in R
+
+>In order to fit our model, we need to identify the terms of the model. We can use symbolic representations of the terms, for example in previous modules we have seen y ~ x, meaning “y is a function of x”. We can also have separate arguments for predictors and outcomes, like previously seen with prop.test(x, n, p = NULL, alternative = c(“two.sided”, “less”, “greater”), conf.level = 0.95, correct = TRUE). Which technique you use will depend entirely on your dataset and usually a dataset within machine learning provides help documentation to point you to which technique to use and each technique has its limitations. For our dataset we will be using logistic regression to create a model. 
+>Let us look into predicting fasting blood sugar based on age and then a second model based on sex. We will be using glm() like in previous models to evaluate this. Simply change the argument family="binomial" to tell the function to run a logistic regression (where it usually is family="gaussian"). This technique is evaluating predictions for a "Yes/No" value, expressed in the data set as a set of "0 1 0 0 1" values 
+
+```{r}
+library(ggplot2) #load in package to plot our predictions for our models
+library(dplyr) #for transforming and interpreting our results later
+model1 <- glm(fbs ~ age, family = "binomial", data = d)
+model2 <- glm(fbs ~ sex, family = "binomial", data = d)
+model3 <- glm(
+  fbs ~ age + sex,
+  family = "binomial", 
+  data = d
+  ) #uses multiple logistic regression to evaluate prediction by age AND sex
+``` 
+Issue with this: i wanted to do cholestrol instead of fbs (fasting blood sugar, but it needed a dataset with 0 1 0 1 1 (Ex) values for "Yes/No", so kind of weird?)
+```{r}
+exp(coef(model1))
+exp(coef(model2))
+exp(coef(model3)) 
+```
+*C: help with understanding interpretation???
+As we can see the odds of fasting blood sugar being "Yes" multiplies for age by 1.039, where for sex in model 2 it multiplies by 1.35. Then for both age and sex in model 3, we see it multiplies by 1.04 and 1.47 for age and sex.
+
+>Let's plot our models to see the predicted values for each feature representation to see the best fitting model:
+
+```{r}
+plot1 <- ggplot(data = model1, aes(x = age, y = fbs))
+plot1 <- plot1 + geom_point()
+plot1 <- plot1 + geom_smooth(method = "glm", formula = y ~ x)
+plot1 #gives our plot, which will show the points of fbs Yes/No with the line representing the predicted values associated with age
+
+plot2 <- ggplot(data = model2, aes(x = sex, y = fbs))
+plot2 <- plot2 + geom_point()
+plot2 <- plot2 + geom_smooth(method = "glm", formula = y ~ x)
+plot2 #gives our plot, which will show the points of fbs Yes/No with the line representing the predicted values associated with sex
+
+plot3 <- ggplot(data = model3, aes(x = age + sex, y = fbs))
+plot3 <- plot3 + geom_point()
+plot3 <- plot3 + geom_smooth(method = "glm", formula = y ~ x)
+plot3 #gives our plot, which will show the points of fbs Yes/No with the line representing the predicted values associated with age and sex
+```
+
+
+### Resampling Methods
+
+>We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly.
+The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously). 
+
+{resampling coding}
+
+
 ## Testing the Model
 
 ### Introduction
 > Model testing is an important part in machine learning. It allows you to find problem or concern that may affect the prediction capability and accuracy. Knowing what and why the model is failing is always beneficial. Model testing and evaluation are very similar, while model testing usually perform certain tests aiming to test a particular issue in the model. 
 
-### Data Splitting ***(move forward before training part)***
-> To test the model, we need to split the data into training set and testing set at the beginning of the modeling process. The test set should not be used prior to selection of the final model. The proportion of the data for testing purpose should be in the range of 20% to 40%. Spending too much in training or testing will not allow us to make a nice and generalizable model. 
 
 ### Testing Model
 > 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
