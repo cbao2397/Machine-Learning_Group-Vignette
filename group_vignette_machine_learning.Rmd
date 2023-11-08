@@ -28,25 +28,25 @@ output:
 >
 > We see examples of machine learning in our everyday lives. On social media, recommendations of “people you may know,” targeted website ads for something you might’ve previously searched for or talked about, or when YouTube suggests another video saying “You May Also Like This” are all powered by machine learning. 
 
-## What is Machine Learning?
+### What is Machine Learning?
 > Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised and unsupervised learning.
 
-### Supervised Learning
+#### Supervised Learning
 > As the name suggests, machine-supervised learning requires supervision in which we teach the machine using training data, labels, and target values (correct answers). The machine identifies variables and features within the training data and learns the algorithm that results in the target output. The machine models the relationships from the training data and uses these features to make predictions. One example of predictive supervised learning is using home attributes to predict real estate sales prices. Because we give the machine the training data and target outcomes, we are able to check the work of the machine’s predictions.
 
-### Unsupervised Learning
+#### Unsupervised Learning
 > Unsupervised learning is often performed as part of exploratory data analysis. Unsupervised learning uses statistical tools to understand and describe the training data but target values are not provided. The machine must identify groups in the dataset. One example of unsupervised machine learning is identifying groups of online shoppers with similar browsing and purchasing histories. The machine groups these online shoppers and will show ads for products of their particular interest. In unsupervised machine learning, unlike in supervised learning, there is not one target outcome or answer because it depends on the data. As a result, one downside of unsupervised learning is that there’s no way to check your work because there is no true answer.
 
-## Why Do Machine Learning?
+### Why Do Machine Learning?
 > R has an expansive public domain of tools and packages to work with machine learning. Machine learning in R is useful for dealing with large amounts of data, it helps identify relationships in datasets to inform decision-making, and the machine can learn from itself to improve automatically. There are many different types of problems that machine learning can solve: regression, classification, association, clustering, anomaly detection, and recommendation. 
 
-### General Process
+#### General Process
 > 1. Clean the data obtained from the training dataset  
 > 2. Form a proper algorithm for building a prediction model  
 > 3. Train the machine and model to understand the pattern of the dataset/project  
 > 4. Predict your results more efficiently and with higher accuracy  
 
-### What is Logistic Regression?
+#### What is Logistic Regression?
 > The regression technique helps the machine predict continuous values, which is a type of supervised machine learning. Regression is a classic form of statistical modeling and one of the simplest tests for machine learning. Logistic regression is used to approximate the linear relationship between continuous variables and a set of continuous predictor variables. Using the slope and intercept of the training data’s regression, the machine can predict outcomes from given input or predictor variables. 
 
 ## Training the Model
