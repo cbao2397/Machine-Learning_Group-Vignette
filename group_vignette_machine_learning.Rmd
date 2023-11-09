@@ -58,7 +58,7 @@ output:
 >An example of how this model teaching works is shown below:
 
 <center>
-  <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/Model%20Diagram.jpg" alt="Model Diagram" width=60%>
+  <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/Model%20Diagram.jpg?raw=true" alt="Model Diagram" width=95%>
   <figcaption>Modeling Diagram (Image from https://bradleyboehmke.github.io/HOML/index.html#software-information)</figcaption>
 </center>
 
