@@ -151,12 +151,12 @@ test_strat   <- testing(split_strat) #our testing data
 ```{r}
 library(ggplot2) #load in package to plot our predictions for our models
 library(dplyr) #for transforming and interpreting our results later
-model1 <- glm(fbs ~ age, family = "binomial", data = d)
-model2 <- glm(fbs ~ sex, family = "binomial", data = d)
+model1 <- glm(fbs ~ age, family = "binomial", data = train_2)
+model2 <- glm(fbs ~ sex, family = "binomial", data = train_2)
 model3 <- glm(
   fbs ~ age + sex,
   family = "binomial", 
-  data = d
+  data = train_2
   ) #uses multiple logistic regression to evaluate prediction by age AND sex
 ``` 
 Issue with this: i wanted to do cholestrol instead of fbs (fasting blood sugar, but it needed a dataset with 0 1 0 1 1 (Ex) values for "Yes/No", so kind of weird?)
@@ -193,6 +193,8 @@ plot3 #gives our plot, which will show the points of fbs Yes/No with the line re
 >We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly.
 The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously). 
 
+**note:move to evaluating the model**
+
 {resampling coding}
 
 
@@ -205,3 +207,4 @@ The two common methods that apply this are k-fold cross validation and bootstrap
 ### Testing Model
 > 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
 > 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory. 
+
