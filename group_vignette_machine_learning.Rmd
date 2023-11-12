@@ -158,12 +158,14 @@ model3 <- glm(
   family = "binomial", 
   data = train_2
   ) #uses multiple logistic regression to evaluate prediction by age AND sex
+model4 <- glm(data = train_2, fbs ~ age + sex + cp + trestbps + chol + restecg + thalach + exang + oldpeak + slope + ca + thal + num, family = "binomial") #this model tests all the features significance with fbs, which uses a selection of features like we learned in Module 17, to which we can work backwards by dropping variables (kind of like we did in model 3 only representing two features)
 ``` 
 Issue with this: i wanted to do cholestrol instead of fbs (fasting blood sugar, but it needed a dataset with 0 1 0 1 1 (Ex) values for "Yes/No", so kind of weird?)
 ```{r}
 exp(coef(model1))
 exp(coef(model2))
 exp(coef(model3)) 
+exp(coef(model4))
 ```
 *C: help with understanding interpretation???
 As we can see the odds of fasting blood sugar being "Yes" multiplies for age by 1.039, where for sex in model 2 it multiplies by 1.35. Then for both age and sex in model 3, we see it multiplies by 1.04 and 1.47 for age and sex.
@@ -185,6 +187,11 @@ plot3 <- ggplot(data = model3, aes(x = age + sex, y = fbs))
 plot3 <- plot3 + geom_point()
 plot3 <- plot3 + geom_smooth(method = "glm", formula = y ~ x)
 plot3 #gives our plot, which will show the points of fbs Yes/No with the line representing the predicted values associated with age and sex
+
+plot4 <- ggplot(data = model4, aes(x = age + sex + cp + trestbps + chol + restecg + thalach + exang + oldpeak + slope + ca + thal + num, y = fbs))
+plot4 <- plot4 + geom_point()
+plot4 <- plot4 + geom_smooth(method = "glm", formula = y ~ x)
+plot4 #gives our plot, which will show the points of fbs Yes/No with the line representing the predicted values associated with age and sex
 ```
 
 
