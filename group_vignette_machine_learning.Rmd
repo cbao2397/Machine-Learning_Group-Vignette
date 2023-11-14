@@ -78,6 +78,10 @@ head(d) #loads in dataset
 
 {pre-processing package load in}
 {pre-processing code}
+```{r}
+d <- na.omit(d)
+```
+**L: **We are supposed to do Median imputation or kNN imputation because we have missing values (NA) in the data. Doing that will affect a lot of the following things. Considering the amount of missing data is relatively small, I decided to use na.omit() for now. 
 
 ### Data Splitting
 
@@ -148,6 +152,7 @@ test_strat   <- testing(split_strat) #our testing data
 >In order to fit our model, we need to identify the terms of the model. We can use symbolic representations of the terms, for example in previous modules we have seen y ~ x, meaning “y is a function of x”. We can also have separate arguments for predictors and outcomes, like previously seen with prop.test(x, n, p = NULL, alternative = c(“two.sided”, “less”, “greater”), conf.level = 0.95, correct = TRUE). Which technique you use will depend entirely on your dataset and usually a dataset within machine learning provides help documentation to point you to which technique to use and each technique has its limitations. For our dataset we will be using logistic regression to create a model. 
 >Let us look into predicting fasting blood sugar based on age and then a second model based on sex. We will be using glm() like in previous models to evaluate this. Simply change the argument family="binomial" to tell the function to run a logistic regression (where it usually is family="gaussian"). This technique is evaluating predictions for a "Yes/No" value, expressed in the data set as a set of "0 1 0 0 1" values 
 
+
 ```{r}
 library(ggplot2) #load in package to plot our predictions for our models
 library(dplyr) #for transforming and interpreting our results later
@@ -215,3 +220,33 @@ The two common methods that apply this are k-fold cross validation and bootstrap
 > 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
 > 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory. 
 
+```{r}
+p <- predict(model3, test_2, type = "response")
+summary(p)
+cl <- ifelse(p > 0.15, "1", "0")
+t <- table(cl, test_2$fbs)
+confusionMatrix(t)
+```
+
+**L: **Oh my god the accuracy looks horrible though it actually looks better than what they have in the example. 
+
+***
+
+**Please read the following explanation (if you want). **
+
+First I want to apologize for not contributing. I am sorry for all the delay and inconvenience. However, I do need to point something out. The code actually looks reasonable if we don't want to do anything else more convenient (like utilizing the functions in packages and do the whole thing more efficiently, which is fine if we don't do so! ), but there is a **really** big problem (not so difficult to solve tho). 
+
+The thing is, we are supposed to be using "num" for all the y (dependent variable). Fbs is an independent variable that can be measured in real life situations. Num, however, is the diagnosis of heart disease. This is the variable dependent on all the first 13 features, and the result of the "machine" we are developing. Therefore, unfortunately if we are using "fbs" as dependent variable, the model will not be as meaningful. 
+
+If you want to change this, change the csv file link to https://raw.githubusercontent.com/cbao2397/DataStorage/main/moremoreprocessedbut01.cleveland.csv . I have processed this file to make the "num" variable to be 0 and 1 (instead of 0-4 which indicates the seriousness of illness). Then change all of the following code to make "num" as "y" (e.g. when modelling, do glm(num ~ age, ...)). In the testing part, besides the fps -> num changing, also change p > 0.15 which is what we have right now to p > 0.5, and change the model in predict() to model3. Ideally the accuracy will look much better. 
+
+**About my set of code: **I think we can add that in the end to show another way (less work actually, because just need to use the built-in functions of packages) to do machine learning. Just do it like, "also you can ...". It's okay if we decide not to include that, since I realized that the current code is useful for explaining machine learning to people who have no idea what that is! 
+
+***
+
+ROC curve part: 
+```{r}
+library(caTools)
+caTools::colAUC(p, test_2[["fbs"]], plotROC = TRUE)
+```
+The returned value represents the area under the curve (AUC) model accuracy metric. We have value as approximately 0.6 which is not too bad (at least better than a random guess). Hope we can improve that to be closer to 1, which represents a perfect model. 
