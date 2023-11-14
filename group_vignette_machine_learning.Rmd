@@ -10,7 +10,7 @@ output:
 ---
 ## Preliminaries 
 
-> Install these packages in ***R:*** {caret}, {dplyr}, {ggplot2}, {rsample}
+> Install these packages in ***R:*** {caret}, {dplyr}, {ggplot2}, {rsample}, {caTools}
 
 ## Objectives
 
@@ -220,15 +220,22 @@ The two common methods that apply this are k-fold cross validation and bootstrap
 > 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
 > 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory. 
 
+<center>
+  <img src="https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/2ad65efc8bd5d0645e0764da9d55f35c066e66d4/ConfusionMatrix.png?raw=true" alt="Model Diagram" width=70%>
+  <figcaption>Confusion Matrix (Image from https://www.v7labs.com/blog/confusion-matrix-guide)</figcaption>
+</center>
+
+
 ```{r}
-p <- predict(model3, test_2, type = "response")
+p <- predict(model4, test_2, type = "response")
 summary(p)
-cl <- ifelse(p > 0.15, "1", "0")
-t <- table(cl, test_2$fbs)
-confusionMatrix(t)
+cl <- ifelse(p > 0.5, "1", "0") #We want to categorize the prediction result (into 0 and 1). 
+testRef <- test_2$num
+t <- table(cl, testRef)
+confusionMatrix(t, positive='1') #Create a confusion matrix which will be returned in the result. 
 ```
 
-**L: **Oh my god the accuracy looks horrible though it actually looks better than what they have in the example. 
+**L: **Things look much better! Accuracy is now 80%. 
 
 ***
 
@@ -238,7 +245,7 @@ First I want to apologize for not contributing. I am sorry for all the delay and
 
 The thing is, we are supposed to be using "num" for all the y (dependent variable). Fbs is an independent variable that can be measured in real life situations. Num, however, is the diagnosis of heart disease. This is the variable dependent on all the first 13 features, and the result of the "machine" we are developing. Therefore, unfortunately if we are using "fbs" as dependent variable, the model will not be as meaningful. 
 
-If you want to change this, change the csv file link to https://raw.githubusercontent.com/cbao2397/DataStorage/main/moremoreprocessedbut01.cleveland.csv . I have processed this file to make the "num" variable to be 0 and 1 (instead of 0-4 which indicates the seriousness of illness). Then change all of the following code to make "num" as "y" (e.g. when modelling, do glm(num ~ age, ...)). In the testing part, besides the fps -> num changing, also change p > 0.15 which is what we have right now to p > 0.5, and change the model in predict() to model3. Ideally the accuracy will look much better. 
+If you want to change this, change the csv file link to https://raw.githubusercontent.com/cbao2397/DataStorage/main/moremoreprocessedbut01.cleveland.csv . I have processed this file to make the "num" variable to be 0 and 1 (instead of 0-4 which indicates the seriousness of illness). Then change all of the following code to make "num" as "y" (e.g. when modelling, do glm(num ~ age, ...)). In the testing part, besides the fps -> num changing, also change p > 0.15 which is what we have right now to p > 0.5, and change the model in predict() to model4. Ideally the accuracy will look much better. 
 
 **About my set of code: **I think we can add that in the end to show another way (less work actually, because just need to use the built-in functions of packages) to do machine learning. Just do it like, "also you can ...". It's okay if we decide not to include that, since I realized that the current code is useful for explaining machine learning to people who have no idea what that is! 
 
@@ -247,6 +254,6 @@ If you want to change this, change the csv file link to https://raw.githubuserco
 ROC curve part: 
 ```{r}
 library(caTools)
-caTools::colAUC(p, test_2[["fbs"]], plotROC = TRUE)
+caTools::colAUC(p, test_2[["num"]], plotROC = TRUE)
 ```
-The returned value represents the area under the curve (AUC) model accuracy metric. We have value as approximately 0.6 which is not too bad (at least better than a random guess). Hope we can improve that to be closer to 1, which represents a perfect model. 
+The returned value represents the area under the curve (AUC) model accuracy metric. We have value as approximately 0.9 which is relatively close to 1 (indicating it's a perfect model). 
