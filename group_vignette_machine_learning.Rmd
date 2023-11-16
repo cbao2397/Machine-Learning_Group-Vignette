@@ -29,7 +29,7 @@ output:
 > We see examples of machine learning in our everyday lives. On social media, recommendations of “people you may know,” targeted website ads for something you might’ve previously searched for or talked about, or when YouTube suggests another video saying “You May Also Like This” are all powered by machine learning. 
 
 ### What is Machine Learning?
-> Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised learning.
+> Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised and unsupervised learning.
 
 #### Supervised Learning
 > As the name suggests, machine-supervised learning requires supervision in which we teach the machine using training data, labels, and target values (correct answers). The machine identifies variables and features within the training data and learns the algorithm that results in the target output. The machine models the relationships from the training data and uses these features to make predictions. One example of predictive supervised learning is using home attributes to predict real estate sales prices. Because we give the machine the training data and target outcomes, we are able to check the work of the machine’s predictions.
@@ -329,13 +329,14 @@ Train the model on all the data minus 1. Use that data point to calculate the pr
 Split the data into k number of data sets (10 folds or more is ideal but the size of data may limcoit), train the model on all but one subset, calculate error for that subset, then repeat until all subsets have an error calculated. 
 
 ```{r}
+library(caret)
 set.seed(123)
 train.control <- trainControl(method = "cv", number = 10) #setting the model to cross validate and k=10
-kmodel<-train(num~., data=d, method="glm", trControl=train.control, family="binomial")
-print(kmodel) 
+kmodel<-train(num~., data=d, family="binomial", trControl=train.control)
+print(kmodel)
 ```
 
-**I can't make this do logistic regression with classification, (and it won't do logloss) so I don't know if this works to show k fold or we should try and make it do what we want? I did lots of googling, might need a new package -AJL**
+**I can't make this do logistic regression(and it won't do logloss as metric) so I don't know if this works to show k fold? I worked on this for hours -AJL**
 
 >You can also perform *repeated K-fold cross validation*.
 
@@ -350,14 +351,3 @@ print(repkmodel)
 >While these validation methods are useful for providing error estimates, these error models are usually discarded in favor of a final one that uses all available data, but errors are still included based on these partitions. 
 
 **END**
-
-### Resampling Methods
-
->We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly.
-The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously). 
-
-
-**AJL note: cut from training, tried to integrate into my section - but maybe add bootstrapping?**
-
-
-{resampling coding}

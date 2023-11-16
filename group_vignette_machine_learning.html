@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lia Bao, Julianna Dick, Emiley Garcia-Zych, Cat Metcalf, Angelique Lindberg" />
 
-<meta name="date" content="2023-11-15" />
+<meta name="date" content="2023-11-16" />
 
 <title>Group Vignette: Machine Learning</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Group Vignette: Machine Learning</h1>
 <h4 class="author">Lia Bao, Julianna Dick, Emiley Garcia-Zych, Cat
 Metcalf, Angelique Lindberg</h4>
-<h4 class="date">2023-11-15</h4>
+<h4 class="date">2023-11-16</h4>
 
 </div>
 
@@ -2163,14 +2163,107 @@ folds or more is ideal but the size of data may limcoit), train the
 model on all but one subset, calculate error for that subset, then
 repeat until all subsets have an error calculated.</p>
 </blockquote>
-<pre class="r"><code>set.seed(123)
+<pre class="r"><code>library(caret)
+set.seed(123)
 train.control &lt;- trainControl(method = &quot;cv&quot;, number = 10) #setting the model to cross validate and k=10
-kmodel&lt;-train(num~., data=d, method=&quot;glm&quot;, trControl=train.control, family=&quot;binomial&quot;)</code></pre>
+kmodel&lt;-train(num~., data=d, family=&quot;binomial&quot;, trControl=train.control)</code></pre>
 <pre><code>## Warning in train.default(x, y, weights = w, ...): You are trying to do
 ## regression and your outcome only has two possible values Are you trying to do
 ## classification? If so, use a 2 level factor as your outcome column.</code></pre>
-<pre class="r"><code>print(kmodel) </code></pre>
-<pre><code>## Generalized Linear Model 
+<pre><code>## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?
+
+## Warning in randomForest.default(x, y, mtry = param$mtry, ...): The response has
+## five or fewer unique values.  Are you sure you want to do regression?</code></pre>
+<pre class="r"><code>print(kmodel)</code></pre>
+<pre><code>## Random Forest 
 ## 
 ## 297 samples
 ##  13 predictor
@@ -2178,14 +2271,18 @@ kmodel&lt;-train(num~., data=d, method=&quot;glm&quot;, trControl=train.control,
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
 ## Summary of sample sizes: 267, 267, 267, 268, 267, 268, ... 
-## Resampling results:
+## Resampling results across tuning parameters:
 ## 
-##   RMSE       Rsquared  MAE      
-##   0.3434877  0.536489  0.2279695</code></pre>
-<p><strong>I can’t make this do logistic regression with classification,
-(and it won’t do logloss) so I don’t know if this works to show k fold
-or we should try and make it do what we want? I did lots of googling,
-might need a new package -AJL</strong></p>
+##   mtry  RMSE       Rsquared   MAE      
+##    2    0.3537541  0.5224832  0.2867539
+##    7    0.3571732  0.4986457  0.2682485
+##   13    0.3633604  0.4764758  0.2669874
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was mtry = 2.</code></pre>
+<p><strong>I can’t make this do logistic regression(and it won’t do
+logloss as metric) so I don’t know if this works to show k fold? I
+worked on this for hours -AJL</strong></p>
 <blockquote>
 <p>You can also perform <em>repeated K-fold cross validation</em>.</p>
 </blockquote>
@@ -2215,24 +2312,6 @@ one that uses all available data, but errors are still included based on
 these partitions.</p>
 </blockquote>
 <p><strong>END</strong></p>
-</div>
-<div id="resampling-methods" class="section level3">
-<h3>Resampling Methods</h3>
-<blockquote>
-<p>We have split our dataset into training and testing sets, the test
-set once again not used in training our model and assessing its
-performance. In order to assess performance, the generalization, we need
-to apply resampling. This is called a validation approach, and it is
-similar to our data splitting section. We split the training set into to
-two new sets: a second training set and a validation set. We can then
-fit our model to segments of the training set and test its performance
-repeatedly. The two common methods that apply this are k-fold cross
-validation and bootstrapping (which we have some experience doing
-previously).</p>
-</blockquote>
-<p><strong>AJL note: cut from training, tried to integrate into my
-section - but maybe add bootstrapping?</strong></p>
-<p>{resampling coding}</p>
 </div>
 </div>
 
