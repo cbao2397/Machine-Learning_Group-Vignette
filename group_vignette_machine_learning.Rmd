@@ -10,7 +10,7 @@ output:
 ---
 ## Preliminaries 
 
-> Install these packages in ***R:*** {caret}, {dplyr}, {ggplot2}, {rsample}, {caTools}
+> Install these packages in ***R:*** {caret}, {dplyr}, {ggplot2}, {rsample}, {caTools}, {ModelMetrics}
 
 ## Objectives
 
@@ -119,8 +119,8 @@ test_2  <- d[-index_2, ]
 # Using rsample package for random sampling
 set.seed(123)  # for reproducibility
 split_1  <- initial_split(d, prop = 0.6)
-train_3  <- training(split_1)
-test_3   <- testing(split_1)
+train_2  <- training(split_1)
+test_2  <- testing(split_1)
 ```
 
 
@@ -200,15 +200,6 @@ plot4 #gives our plot, which will show the points of fbs Yes/No with the line re
 ```
 
 
-### Resampling Methods
-
->We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly.
-The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously). 
-
-**note:move to evaluating the model**
-
-{resampling coding}
-
 
 ## Testing the Model
 
@@ -217,7 +208,7 @@ The two common methods that apply this are k-fold cross validation and bootstrap
 
 
 ### Testing Model
-> 1. Calculate the model results to the data points in the testing data set. Use the test data as imput for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
+> 1. Calculate the model results to the data points in the testing data set. Use the test data as input for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set. 
 > 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory. 
 
 <center>
@@ -257,3 +248,116 @@ library(caTools)
 caTools::colAUC(p, test_2[["num"]], plotROC = TRUE)
 ```
 The returned value represents the area under the curve (AUC) model accuracy metric. We have value as approximately 0.9 which is relatively close to 1 (indicating it's a perfect model). 
+
+## Evaluating the Model
+>Sound statistical practice is to assess the performance of your model and how accurate it is at predicting values. This is done in a variety of ways, some of which you've seen in Testing the Model. Another way is via loss functions, which compare the value predicted by the model to the actual value of the sample. The product of this equation is called an error (or residual[wink]). There are a variety of loss functions that can be used depending on the context of the data and the type of model applied.
+
+>In regression without machine learning, error can be evaluated by calculating the difference between the actual and predicted values, the residual. In machine learning, models are assessed by calculating the errors of the entire data. These two principles are applied in conjunction for regression via machine learning.
+
+### Loss Functions
+>The loss functions commonly used in machine learning regression models are:
+
+>*Mean squared error (MSE)*
+
+>$MSE=(1/n)Σ_{i=1}^{n}(actual(y)_{i}-predicted(y)_{i})^2$
+
+>The average of the squared errors. Since it’s based on the original error, the larger the original error estimate, the larger the subsequent loss functions. An optimal model minimizes the MSE. 
+
+>*Root mean squared error (RMSE)*
+
+>$RMSE=√(1/n)Σ_{i=1}^{n}(actual(y)_{i}-predicted(y)_{i})^2$
+
+>Square root of the MSE. This is used so the error is in the same units as your response variable (instead of units squared like MSE). An optimal model minimizes the RMSE.
+
+>*Root mean squared logarithmic error (RMSLE)*
+
+>$RMSLE=√(1/n)Σ_{i=1}^{n}(log(actual(y)_{i}-predicted(y)_{i}))^2$
+
+>RMSE but with log of errors. Useful when there is a wide range of response values, as it minimizes the impact of large values with large errors(unlike MSE/RMSE). RMSLE minimizes this impact so that small response values with large errors can have just as meaningful of an impact as large response values with large errors. An optimal model minimizes the RMSLE. 
+>*Mean absolute error (MAE)*
+
+>$MAE=(1/n)Σ_{i=1}^{n}(|actual(y)_{i}-predicted(y)_{i}|)^2$
+
+>Average of the absolute errors. Similar to MSE but, since it takes the absolutes of the differences between the actual and predicted values, there is less effect of large errors than in the MSE. An optimal model minimizes the MAE. 
+
+
+>*Coefficient of determination (R2)*
+
+>The proportion of the variance in the dependent variable that is predictable from the independent variable.
+While a familiar statistic in regression analysis, it provides limited information about regression models here since less variability in the response variable can cause a lower R2. The goal is typically a maximized R2 (meaning the explanatory variable has a large effect on variability of response variable).
+
+>However, these loss functions are not appropriate for logistic regression (MSE will be negative in this case, for example). Since logistic regression is binary, you typically use the cross-entropy loss function, also called the "log loss" function.
+
+>*Log Loss*
+
+>$LL=-(1/n)Σ_{i=1}^{n}(actual(y)_{i})(log(prob(y)_{i}))+(1-(actual(y)_{i}))(log(1-prob(y)_{i}))$
+
+>The negative average of the log of the error. Error in this case compares the actual classification (from data not in training sample) to the model's predicted probabilities ($prob(y)_{i}$ is probability of model assigning to class 1 and $1-prob(y)_{i}$ prob of assigning to class 0). Luckily, there's a handy function for calculating log loss. Unfortunately, it's not in {caret}, but the package {ModelMetrics} (which loading masks confusionMatrix). An optimal model minimized the log loss function; a log loss of 0 would be a perferct model. 
+
+```{r}
+library(ModelMetrics)
+LL<-logLoss(model4) #don't have to specify actual and predicted values when a glmobject has been calculated
+LL
+```
+
+>Alone, the log loss is difficult to interpret, but when compared to other models...
+
+```{r}
+LL1<-logLoss(model1)
+LL2<-logLoss(model2)
+LL3<-logLoss(model3)
+LL4<-logLoss(model4)
+LL1
+LL2
+LL3
+LL4
+```
+>...we see that the model that includes all the features is the best model for this data (has the log loss value closest to 0).
+
+### Data Partitioning/Cross Validation
+>As many loss functions as appropriate are tested along with the model. However, you typically want to calculate an out-of-sample error rather than an in-sample error. An in-sample error uses the same data used to train the model. This is because the model is already familiar with this data and was built from it; it is supposed to fit this data well. Instead you want to calculate out-of-sample error, on data new to the model, in order to assess performance, the *generalization* we need to apply resampling. This is called a cross validation approach. 
+
+>In order to do so, you must partition the data before training the model. We originally performed a 60/40 split, but there are several ways you can choose to do this (based on the characteristics of your data) including:
+
+>**Data split**
+Splitting the data proportionally (what we did). One set is used to train, the other to calculate error. However, the presence of an outlier in either set of the data can significantly affect the accuracy of the model or the estimates of error.
+
+>**Leave One Out**
+Train the model on all the data minus 1. Use that data point to calculate the prediction error, then repeat on all points until there is an error for each point. While affected by outliers, it can be time-consuming for large data.
+
+>**K-fold**
+Split the data into k number of data sets (10 folds or more is ideal but the size of data may limcoit), train the model on all but one subset, calculate error for that subset, then repeat until all subsets have an error calculated. 
+
+```{r}
+set.seed(123)
+train.control <- trainControl(method = "cv", number = 10) #setting the model to cross validate and k=10
+kmodel<-train(num~., data=d, method="glm", trControl=train.control, family="binomial")
+print(kmodel) 
+```
+
+**I can't make this do logistic regression with classification, (and it won't do logloss) so I don't know if this works to show k fold or we should try and make it do what we want? I did lots of googling, might need a new package -AJL**
+
+>You can also perform *repeated K-fold cross validation*.
+
+```{r}
+set.seed(123)
+train.control2 <- trainControl(method = "repeatedcv", number = 10, repeats = 3) #setting the model to repeatedly cross validate, k=10, and repeat three times
+repkmodel<-train(num~., data=d, method="glm", trControl=train.control2, family="binomial")
+print(repkmodel) 
+```
+
+
+>While these validation methods are useful for providing error estimates, these error models are usually discarded in favor of a final one that uses all available data, but errors are still included based on these partitions. 
+
+**END**
+
+### Resampling Methods
+
+>We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly.
+The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously). 
+
+
+**AJL note: cut from training, tried to integrate into my section - but maybe add bootstrapping?**
+
+
+{resampling coding}
