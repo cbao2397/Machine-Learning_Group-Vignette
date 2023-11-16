@@ -436,10 +436,49 @@ plot3 #gives our plot, which will show the points of fbs Yes/No with the line re
 
 ```
 
+## Challenge 2: Testing the Model 
+
 ```{r}
+p <- predict(model3, test_2, type = "response")
+summary(p)
+```
+
+```{r}
+library(ModelMetrics)
+cl <- ifelse(p > 0.5, "1", "0") #We want to categorize the prediction result (into 0 and 1). 
+testRef <- test_2$Diagnosis
+t <- table(cl, testRef)
+print(t)
+caret::confusionMatrix(t, positive = '1') #Create a confusion matrix which will be returned in the result. 
+```
+
+```{r}
+library(caTools)
+caTools::colAUC(p, test_2[["Diagnosis"]], plotROC = TRUE)
+```
+
+## Challenge 3: Evaluating the Model 
+
+```{r}
+library(ModelMetrics)
+
+LL1 <-logLoss(model1)
+LL2 <-logLoss(model2)
+LL3 <-logLoss(model3)
+
+LL1
+LL2
+LL3
 
 ```
 
-## Challenge 2: Testing the Model 
+```{r}
+set.seed(123)
+train.control <- trainControl(method = "cv", number = 10 )
+kmodel <- train(Diagnosis~., data = b, method = 'glm', trControl = train.control, family = "binomial")
+print(kmodel)
+```
 
-## Challenge 3: Evaluating the Model 
+```{r}
+
+```
