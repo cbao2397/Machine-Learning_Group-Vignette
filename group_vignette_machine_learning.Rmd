@@ -373,3 +373,7 @@ head(b) #loads in dataset
 # Refer to our repository for a description of the data, in the file called wdbc.names
 ```
 
+```{r}
+b <- na.omit(b)
+```
+
