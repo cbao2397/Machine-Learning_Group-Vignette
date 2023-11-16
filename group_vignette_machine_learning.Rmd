@@ -361,3 +361,15 @@ The two common methods that apply this are k-fold cross validation and bootstrap
 
 
 {resampling coding}
+
+
+## Challenge
+```{r}
+library(curl)
+x <- curl("https://github.com/cbao2397/Machine-Learning_Group-Vignette/blob/master/wdbcMB.csv")
+b <- read.csv(x, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(b) #loads in dataset
+
+# Refer to our repository for a description of the data, in the file called wdbc.names
+```
+
