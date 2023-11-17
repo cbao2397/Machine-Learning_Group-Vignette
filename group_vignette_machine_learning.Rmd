@@ -352,18 +352,6 @@ print(repkmodel)
 
 > While these validation methods are useful for providing error estimates, these error models are usually discarded in favor of a final one that uses all available data, but errors are still included based on these partitions.
 
-**END**
-<<<<<<< HEAD
-=======
-
-### Resampling Methods
-
-> We have split our dataset into training and testing sets, the test set once again not used in training our model and assessing its performance. In order to assess performance, the generalization, we need to apply resampling. This is called a validation approach, and it is similar to our data splitting section. We split the training set into to two new sets: a second training set and a validation set. We can then fit our model to segments of the training set and test its performance repeatedly. The two common methods that apply this are k-fold cross validation and bootstrapping (which we have some experience doing previously).
-
-**AJL note: cut from training, tried to integrate into my section - but maybe add bootstrapping?**
-
-{resampling coding}
-
 ## Challenge 1: Train the Model 
 
 ```{r}
@@ -489,4 +477,4 @@ print(kmodel)
 ```{r}
 
 ```
->>>>>>> 4196febc557a808cc428165ac53f571c2337952c
+
