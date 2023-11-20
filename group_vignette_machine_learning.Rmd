@@ -236,21 +236,6 @@ t <- table(cl, testRef)
 confusionMatrix(t, positive='1') #Create a confusion matrix which will be returned in the result. 
 ```
 
-**L:** Things look much better! Accuracy is now 80%.
-
-------------------------------------------------------------------------
-
-**Please read the following explanation (if you want).**
-
-First I want to apologize for not contributing. I am sorry for all the delay and inconvenience. However, I do need to point something out. The code actually looks reasonable if we don't want to do anything else more convenient (like utilizing the functions in packages and do the whole thing more efficiently, which is fine if we don't do so! ), but there is a **really** big problem (not so difficult to solve tho).
-
-The thing is, we are supposed to be using "num" for all the y (dependent variable). Fbs is an independent variable that can be measured in real life situations. Num, however, is the diagnosis of heart disease. This is the variable dependent on all the first 13 features, and the result of the "machine" we are developing. Therefore, unfortunately if we are using "fbs" as dependent variable, the model will not be as meaningful.
-
-If you want to change this, change the csv file link to <https://raw.githubusercontent.com/cbao2397/DataStorage/main/moremoreprocessedbut01.cleveland.csv> . I have processed this file to make the "num" variable to be 0 and 1 (instead of 0-4 which indicates the seriousness of illness). Then change all of the following code to make "num" as "y" (e.g. when modelling, do glm(num \~ age, ...)). In the testing part, besides the fps -\> num changing, also change p \> 0.15 which is what we have right now to p \> 0.5, and change the model in predict() to model4. Ideally the accuracy will look much better.
-
-**About my set of code:** I think we can add that in the end to show another way (less work actually, because just need to use the built-in functions of packages) to do machine learning. Just do it like, "also you can ...". It's okay if we decide not to include that, since I realized that the current code is useful for explaining machine learning to people who have no idea what that is!
-
-------------------------------------------------------------------------
 
 ROC curve part:
 
@@ -332,28 +317,44 @@ LL4
 
 > In order to do so, you must partition the data before training the model. We originally performed a 60/40 split, but there are several ways you can choose to do this (based on the characteristics of your data) including:
 
-> **Data split** Splitting the data proportionally (what we did). One set is used to train, the other to calculate error. However, the presence of an outlier in either set of the data can significantly affect the accuracy of the model or the estimates of error.
+> **Data split** 
 
-> **Leave One Out** Train the model on all the data minus 1. Use that data point to calculate the prediction error, then repeat on all points until there is an error for each point. While affected by outliers, it can be time-consuming for large data.
+> Splitting the data proportionally (what we did). One set is used to train, the other to calculate error. However, the presence of an outlier in either set of the data can significantly affect the accuracy of the model or the estimates of error.
 
-> **K-fold** Split the data into k number of data sets (10 folds or more is ideal but the size of data may limcoit), train the model on all but one subset, calculate error for that subset, then repeat until all subsets have an error calculated.
+> **Leave One Out** 
 
+> Train the model on all the data minus 1. Use that data point to calculate the prediction error, then repeat on all points until there is an error for each point. While affected by outliers, it can be time-consuming to do by hand (lucky there's a function).
+
+*Note:* In order to use train() in caret for logistic regression with classification and have it actually compute logistic regression, you have to make sure the console can recognize the binary nature of the data, which usually means releveling and ensuring you data is a factor. In our case, we first have to tell it that 0 is the reference:
 ```{r}
-library(caret)
-set.seed(123)
-train.control <- trainControl(method = "cv", number = 10) #setting the model to cross validate and k=10
-kmodel<-train(num~., data=d, family="binomial", trControl=train.control)
-print(kmodel)
+d$num<-as.factor(d$num)
+relevel(d$num, ref="0")
 ```
 
-**I can't make this do logistic regression(and it won't do logloss as metric) so I don't know if this works to show k fold? I worked on this for hours -AJL**
+```{r}
+set.seed(123)
+train.control <- trainControl(method = "LOOCV") #setting the model to cross validate by leaving one out
+loomodel<-train(num~., data=d, method= "glm", family=binomial, trControl=train.control)
+print(loomodel)
+```
+
+> **K-fold** 
+
+>Split the data into k number of data sets (10 folds or more is ideal but the size of data may limit), train the model on all but one subset, calculate error for that subset, then repeat until all subsets have an error calculated.
+
+```{r}
+set.seed(123)
+train.control <- trainControl(method = "cv", number = 10) #setting the model to cross validate and k=10
+kmodel<-train(num~., data=d, method= "glm", family=binomial, trControl=train.control)
+print(kmodel)
+```
 
 > You can also perform *repeated K-fold cross validation*.
 
 ```{r}
 set.seed(123)
 train.control2 <- trainControl(method = "repeatedcv", number = 10, repeats = 3) #setting the model to repeatedly cross validate, k=10, and repeat three times
-repkmodel<-train(num~., data=d, method="glm", trControl=train.control2, family="binomial")
+repkmodel<-train(num~., data=d, method="glm", family = binomial, trControl=train.control2)
 print(repkmodel) 
 ```
 
