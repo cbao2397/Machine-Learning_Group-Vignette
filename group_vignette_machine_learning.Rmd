@@ -54,6 +54,8 @@ output:
 ### Why Do Machine Learning?
 
 > R has an expansive public domain of tools and packages to work with machine learning. Machine learning in R is useful for dealing with large amounts of data, it helps identify relationships in datasets to inform decision-making, and the machine can learn from itself to improve automatically. There are many different types of problems that machine learning can solve: regression, classification, association, clustering, anomaly detection, and recommendation.
+> 
+> We chose to do our module on machine learning to emphasize its ability to predict outcomes from complex data based on a combination of previous trends and current trends. Machine learning is favorable to regression models, for example, because of its flexibility and versatility. While regression models produce similar outcomes to machine learning, regression is mainly used for simple, linear numerical relationships between the input and target output. Machine learning is ideal for complex relationships, handling data with outliers, understanding interactions between variables/features, and prediction accuracy. Most importantly, machine learning is beneficial for transfer learning, where a pre-trained model can be fine-tuned to your specific process or problem. 
 
 #### General Process
 
@@ -100,8 +102,6 @@ head(d) #loads in dataset
 ```{r}
 d <- na.omit(d)
 ```
-
-**L:** We are supposed to do Median imputation or kNN imputation because we have missing values (NA) in the data. Doing that will affect a lot of the following things. Considering the amount of missing data is relatively small, I decided to use na.omit() for now.
 
 ### Data Splitting
 
@@ -377,7 +377,7 @@ head(b) #loads in dataset
 b <- na.omit(b)
 ```
 
-Use simple random sampling to split the data
+> Use simple random sampling to split the data
 
 ```{r}
 library(caret)
@@ -402,7 +402,7 @@ train_2  <- training(split_1)
 test_2  <- testing(split_1)
 ```
 
-Let's use the data set to predict malignant or benign cancer based on texture1 (standard deviation of gray scale values). Fit the model...
+> Let's use the data set to predict malignant or benign cancer based on texture1 (standard deviation of gray scale values). Fit the model...
 
 ```{r}
 library(ggplot2) #load in package to plot our predictions for our models
@@ -422,6 +422,7 @@ exp(coef(model1))
 exp(coef(model2))
 exp(coef(model3)) 
 ```
+> Plot the data
 
 ```{r}
 plot1 <- ggplot(data = model1, aes(x = texture1, y = Diagnosis))
@@ -477,14 +478,38 @@ LL3
 
 ```
 
+> Confirming Dichotomous Outcomes
+
+```{r}
+# Making sure the machine recognizes the binary nature of the data
+b$Diagnosis<-as.factor(b$Diagnosis)
+relevel(b$Diagnosis, ref="0")
+```
+
+> Leave One Out
+
+```{r}
+set.seed(123)
+train.control <- trainControl(method = "LOOCV") #setting the model to cross validate by leaving one out
+loomodel2<-train(Diagnosis~., data=b, method= "glm", family=binomial, trControl=train.control)
+print(loomodel2)
+```
+
+> K-fold
+
 ```{r}
 set.seed(123)
 train.control <- trainControl(method = "cv", number = 10 )
-kmodel <- train(Diagnosis~., data = b, method = 'glm', trControl = train.control, family = "binomial")
-print(kmodel)
+kmodel2 <- train(Diagnosis~., data = b, method = 'glm', trControl = train.control, family = "binomial")
+print(kmodel2)
 ```
 
-```{r}
+> Repeated K-fold Cross Validation
 
+```{r}
+set.seed(123)
+train.control2 <- trainControl(method = "repeatedcv", number = 10, repeats = 3) #setting the model to repeatedly cross validate, k=10, and repeat three times
+repkmodel2<-train(Diagnosis~., data=b, method="glm", family = binomial, trControl=train.control2)
+print(repkmodel2) 
 ```
 
