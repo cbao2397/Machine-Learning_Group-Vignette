@@ -488,7 +488,7 @@ relevel(b$Diagnosis, ref="0")
 
 > Leave One Out
 
-```{r}
+```{r, warning=FALSE}
 set.seed(123)
 train.control <- trainControl(method = "LOOCV") #setting the model to cross validate by leaving one out
 loomodel2<-train(Diagnosis~., data=b, method= "glm", family=binomial, trControl=train.control)
@@ -497,7 +497,7 @@ print(loomodel2)
 
 > K-fold
 
-```{r}
+```{r, warning=FALSE}
 set.seed(123)
 train.control <- trainControl(method = "cv", number = 10 )
 kmodel2 <- train(Diagnosis~., data = b, method = 'glm', trControl = train.control, family = "binomial")
@@ -506,7 +506,7 @@ print(kmodel2)
 
 > Repeated K-fold Cross Validation
 
-```{r}
+```{r, warning=FALSE}
 set.seed(123)
 train.control2 <- trainControl(method = "repeatedcv", number = 10, repeats = 3) #setting the model to repeatedly cross validate, k=10, and repeat three times
 repkmodel2<-train(Diagnosis~., data=b, method="glm", family = binomial, trControl=train.control2)
