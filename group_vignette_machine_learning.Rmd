@@ -371,6 +371,8 @@ print(repkmodel)
 
 ## Challenge 1: Train the Model 
 
+> Now you will try Supervised Machine Learning on your own using the Breast Cancer Wisconsin (Diagnostic).
+
 ```{r}
 library(curl)
 x <- curl("https://raw.githubusercontent.com/cbao2397/DataStorage/main/wdbc10.csv")
