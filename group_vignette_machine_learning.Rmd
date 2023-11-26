@@ -216,8 +216,9 @@ plot4 #gives our plot, which will show the points of fbs Yes/No with the line re
 
 ### Testing Model
 
-> 1.  Calculate the model results to the data points in the testing data set. Use the test data as input for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set.
-> 2.  Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory.
+> 1. Calculate the model results to the data points in the testing data set. Use the test data as input for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set.
+
+> 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory.
 
 <center>
 
@@ -236,15 +237,23 @@ t <- table(cl, testRef)
 confusionMatrix(t, positive='1') #Create a confusion matrix which will be returned in the result. 
 ```
 
+> The confusionMatrix function returns a variety of values. 
 
-ROC curve part:
+> 1. Accuracy: Overall, how often is the classifier correct? It indicates the proportion of true predictions among all predictions. 
+
+> 2. Precision: How accurately does the classifier predict events? It indicates the true positives to false positive ratio. 
+
+> 3. Sensitivity: How accurately does the classifier classify actual events? It indicates the proportion of predicted events among all events taken place. 
+
+> 4. Specificity: How accurately does the classifier classify actual non-events? Similar to sensitivity, but specificity indicates the proportion of predicted non-events. 
+
 
 ```{r}
 library(caTools)
 caTools::colAUC(p, test_2[["num"]], plotROC = TRUE)
 ```
 
-The returned value represents the area under the curve (AUC) model accuracy metric. We have value as approximately 0.9 which is relatively close to 1 (indicating it's a perfect model).
+> Receiver Operating Characteristic curve (ROC curve) plots the false positive rate along the x-axis and the true positive rate along the y-axis. AUC is the Area Under the Curve. The goal is making the ROC curve closer to the upper left corner and maximize AUC. If the ROC curve is a diagonal line from the lower left corner to the upper right corner, with AUC of 0.5, It means that the model is no better than random guessing. A perfect model will have AUC value of 1. 
 
 ## Evaluating the Model
 
