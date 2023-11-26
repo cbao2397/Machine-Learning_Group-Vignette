@@ -95,9 +95,7 @@ d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(d) #loads in dataset
 ```
 
-> There is some pre-processing we must conduct since there are missing values. The instructions for this are here, but we will also show them:
-
-{pre-processing package load in} {pre-processing code}
+> There is some pre-processing we must conduct since there are missing values. 
 
 ```{r}
 d <- na.omit(d)
