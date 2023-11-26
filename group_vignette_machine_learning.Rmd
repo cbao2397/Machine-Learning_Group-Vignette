@@ -382,6 +382,8 @@ head(b) #loads in dataset
 # Refer to our repository for a description of the data, in the file called wdbc.names
 ```
 
+> Next, clean the data of NAs. 
+
 ```{r}
 b <- na.omit(b)
 ```
@@ -431,6 +433,7 @@ exp(coef(model1))
 exp(coef(model2))
 exp(coef(model3)) 
 ```
+
 > Plot the data
 
 ```{r}
@@ -453,6 +456,8 @@ plot3 #gives our plot, which will show the points of fbs Yes/No with the line re
 
 ## Challenge 2: Testing the Model 
 
+> Now you will test the model and have it make predictions based on the dataset. 
+
 ```{r}
 p <- predict(model3, test_2, type = "response")
 summary(p)
@@ -473,6 +478,8 @@ caTools::colAUC(p, test_2[["Diagnosis"]], plotROC = TRUE)
 ```
 
 ## Challenge 3: Evaluating the Model 
+
+> Let's check the accuracy of the machine's predictions. 
 
 ```{r}
 library(ModelMetrics)
@@ -522,3 +529,4 @@ repkmodel2<-train(Diagnosis~., data=b, method="glm", family = binomial, trContro
 print(repkmodel2) 
 ```
 
+> Looks like our model is pretty accurate! Nice job!
