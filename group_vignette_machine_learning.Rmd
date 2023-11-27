@@ -36,12 +36,10 @@ output:
 > We see examples of machine learning in our everyday lives. On social media, recommendations of "people you may know," targeted website ads for something you might've previously searched for or talked about, or when YouTube suggests another video saying "You May Also Like This" are all powered by machine learning.
 
 ### What is Machine Learning?
-<<<<<<< HEAD
 > Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised and unsupervised learning.
-=======
+
 
 > Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised learning.
->>>>>>> 4196febc557a808cc428165ac53f571c2337952c
 
 #### Supervised Learning
 
@@ -54,7 +52,7 @@ output:
 ### Why Do Machine Learning?
 
 > R has an expansive public domain of tools and packages to work with machine learning. Machine learning in R is useful for dealing with large amounts of data, it helps identify relationships in datasets to inform decision-making, and the machine can learn from itself to improve automatically. There are many different types of problems that machine learning can solve: regression, classification, association, clustering, anomaly detection, and recommendation.
-> 
+
 > We chose to do our module on machine learning to emphasize its ability to predict outcomes from complex data based on a combination of previous trends and current trends. Machine learning is favorable to regression models, for example, because of its flexibility and versatility. While regression models produce similar outcomes to machine learning, regression is mainly used for simple, linear numerical relationships between the input and target output. Machine learning is ideal for complex relationships, handling data with outliers, understanding interactions between variables/features, and prediction accuracy. Most importantly, machine learning is beneficial for transfer learning, where a pre-trained model can be fine-tuned to your specific process or problem. 
 
 #### General Process
@@ -72,7 +70,7 @@ output:
 
 > In order to produce a well-crafted, working model it is important to use the data wisely for the learning and validation procedures. This includes proper pre-processing for the feature and target variables while also minimizing data leakage. Finally, after you have completed this we can assess the model performance.
 
-> \*Although we focus on supervised learning, these techniques can also be applied to the unsupervised learning later in the module.
+> \*Although we focus on supervised learning, these techniques can also be applied to the unsupervised learning.
 
 > An example of how this model teaching works is shown below:
 
@@ -214,8 +212,6 @@ plot4 #gives our plot, which will show the points of fbs Yes/No with the line re
 
 > Model testing is an important part in machine learning. It allows you to find problem or concern that may affect the prediction capability and accuracy. Knowing what and why the model is failing is always beneficial. Model testing and evaluation are very similar, while model testing usually perform certain tests aiming to test a particular issue in the model.
 
-### Testing Model
-
 > 1. Calculate the model results to the data points in the testing data set. Use the test data as input for the model to generate predictions. Perform this task using the highest performing model from the validation phase. You should have both the real values and the model's corresponding predictions for each input data instance in the data set.
 
 > 2. Compute statistical values comparing the model results to the test data. Check to ensure the model fits the test data set closely enough to be satisfactory.
@@ -263,7 +259,7 @@ caTools::colAUC(p, test_2[["num"]], plotROC = TRUE)
 
 ### Loss Functions
 
-> The loss functions commonly used in machine learning regression models are:
+> The loss functions commonly used in machine learning models are:
 
 > *Mean squared error (MSE)*
 
@@ -322,7 +318,7 @@ LL4
 
 ### Data Partitioning/Cross Validation
 
-> As many loss functions as appropriate are tested along with the model. However, you typically want to calculate an out-of-sample error rather than an in-sample error. An in-sample error uses the same data used to train the model. This is because the model is already familiar with this data and was built from it; it is supposed to fit this data well. Instead you want to calculate out-of-sample error, on data new to the model, in order to assess performance, the *generalization* we need to apply resampling. This is called a cross validation approach.
+> As many loss functions as appropriate are tested along with the model. However, you typically want to calculate an out-of-sample error rather than an in-sample error. An in-sample error uses the same data used to train the model. This is because the model is already familiar with this data and was built from it; it is supposed to fit this data well. Instead you want to calculate out-of-sample error, on data new to the model, in order to assess performance, the *generalizability* we need to apply resampling. This is called a cross validation approach.
 
 > In order to do so, you must partition the data before training the model. We originally performed a 60/40 split, but there are several ways you can choose to do this (based on the characteristics of your data) including:
 
@@ -334,7 +330,7 @@ LL4
 
 > Train the model on all the data minus 1. Use that data point to calculate the prediction error, then repeat on all points until there is an error for each point. While affected by outliers, it can be time-consuming to do by hand (lucky there's a function).
 
-*Note:* In order to use train() in caret for logistic regression with classification and have it actually compute logistic regression, you have to make sure the console can recognize the binary nature of the data, which usually means releveling and ensuring you data is a factor. In our case, we first have to tell it that 0 is the reference:
+/*Note: In order to use train() in caret for logistic regression with classification and have it actually compute logistic regression, you have to make sure the console can recognize the binary nature of the data, which usually means releveling and ensuring you data is a factor. In our case, we first have to tell it that 0 is the reference:
 ```{r}
 d$num<-as.factor(d$num)
 relevel(d$num, ref="0")
@@ -371,7 +367,7 @@ print(repkmodel)
 
 ## Challenge 1: Train the Model 
 
-> Now you will try Supervised Machine Learning on your own using the Breast Cancer Wisconsin (Diagnostic).
+> Now you will try Supervised Machine Learning on your own using the Breast Cancer Wisconsin (Diagnostic). Let's load the data.
 
 ```{r}
 library(curl)
@@ -388,7 +384,7 @@ head(b) #loads in dataset
 b <- na.omit(b)
 ```
 
-> Use simple random sampling to split the data
+> Use simple random sampling to split the data and practice training and testing.
 
 ```{r}
 library(caret)
@@ -413,7 +409,7 @@ train_2  <- training(split_1)
 test_2  <- testing(split_1)
 ```
 
-> Let's use the data set to predict malignant or benign cancer based on texture1 (standard deviation of gray scale values). Fit the model...
+> Let's use the data set to predict malignant or benign cancer based on texture1 (standard deviation of gray scale values) and perileter1 (perimeter). Fit models with each predictor and also combine them...
 
 ```{r}
 library(ggplot2) #load in package to plot our predictions for our models
@@ -425,8 +421,9 @@ model3 <- glm(
   family = "binomial", 
   data = train_2
   )
-
 ```
+
+>...display the coefficients...
 
 ```{r}
 exp(coef(model1))
@@ -434,7 +431,7 @@ exp(coef(model2))
 exp(coef(model3)) 
 ```
 
-> Plot the data
+> ... and plot the models.
 
 ```{r}
 plot1 <- ggplot(data = model1, aes(x = texture1, y = Diagnosis))
@@ -454,14 +451,23 @@ plot3 #gives our plot, which will show the points of fbs Yes/No with the line re
 
 ```
 
+Let's also create a model with all variables as predictors
+
+```{r, warning=FALSE}
+model4 <- glm(Diagnosis ~ ., family = "binomial", data = train_2)
+```
+
+
 ## Challenge 2: Testing the Model 
 
-> Now you will test the model and have it make predictions based on the dataset. 
+> Now you will test a model and have it make predictions based on the dataset. 
 
 ```{r}
 p <- predict(model3, test_2, type = "response")
 summary(p)
 ```
+
+> Create a confusion matrix.
 
 ```{r}
 library(ModelMetrics)
@@ -472,6 +478,8 @@ print(t)
 caret::confusionMatrix(t, positive = '1') #Create a confusion matrix which will be returned in the result. 
 ```
 
+> Don't forget to graph the ROC curve.
+
 ```{r}
 library(caTools)
 caTools::colAUC(p, test_2[["Diagnosis"]], plotROC = TRUE)
@@ -479,7 +487,9 @@ caTools::colAUC(p, test_2[["Diagnosis"]], plotROC = TRUE)
 
 ## Challenge 3: Evaluating the Model 
 
-> Let's check the accuracy of the machine's predictions. 
+> Finally, let's evaluate models using loss functions and create cross validated models.
+
+> Let's check the accuracy of the previous models using log loss. Which is the most accurate model?
 
 ```{r}
 library(ModelMetrics)
@@ -487,14 +497,16 @@ library(ModelMetrics)
 LL1 <-logLoss(model1)
 LL2 <-logLoss(model2)
 LL3 <-logLoss(model3)
+LL4 <-logLoss(model4)
 
 LL1
 LL2
 LL3
-
+LL4
 ```
 
-> Confirming Dichotomous Outcomes
+
+> Now let's try cross-validated models. Fitst, confirm Dichotomous Outcomes by releveling the data.
 
 ```{r}
 # Making sure the machine recognizes the binary nature of the data
@@ -502,7 +514,7 @@ b$Diagnosis<-as.factor(b$Diagnosis)
 relevel(b$Diagnosis, ref="0")
 ```
 
-> Leave One Out
+> Create a cross-validated Leave One Out logistic regression model.
 
 ```{r, warning=FALSE}
 set.seed(123)
@@ -511,7 +523,7 @@ loomodel2<-train(Diagnosis~., data=b, method= "glm", family=binomial, trControl=
 print(loomodel2)
 ```
 
-> K-fold
+> Create a cross-valiated K-fold logistic regression model.
 
 ```{r, warning=FALSE}
 set.seed(123)
@@ -520,7 +532,7 @@ kmodel2 <- train(Diagnosis~., data = b, method = 'glm', trControl = train.contro
 print(kmodel2)
 ```
 
-> Repeated K-fold Cross Validation
+> Create a model with Repeated K-fold cross validation.
 
 ```{r, warning=FALSE}
 set.seed(123)
@@ -530,3 +542,24 @@ print(repkmodel2)
 ```
 
 > Looks like our model is pretty accurate! Nice job!
+
+## Works Cited 
+
+data:https://archive.ics.uci.edu/datasets
+
+https://bradleyboehmke.github.io/HOML/process.html#model-eval
+
+https://lgatto.github.io/IntroMachineLearningWithR/final-notes.html#model-performance-1
+
+https://www.geeksforgeeks.org/cross-validation-in-r-programming/
+
+https://www.analyticsvidhya.com/blog/2020/11/binary-cross-entropy-aka-log-loss-the-cost-function-used-in-logistic-regression/
+
+https://medium.com/@chandu.bathula16/mastering-multi-class-log-loss-a-comprehensive-guide-to-boost-your-machine-learning-skills-fbbc74f63c7#:~:text=Interpretation%20and%20Evaluation%3A&text=Lower%20log_loss%20values%20indicate%20better,higher%20values%20signify%20poorer%20performance.
+
+https://rdrr.io/r/stats/relevel.html
+
+https://www.geeksforgeeks.org/k-fold-cross-validation-in-r-programming/
+
+http://www.sthda.com/english/articles/38-regression-model-validation/157-cross-validation-essentials-in-r/#k-fold-cross-validation
+
