@@ -36,8 +36,6 @@ output:
 > We see examples of machine learning in our everyday lives. On social media, recommendations of "people you may know," targeted website ads for something you might've previously searched for or talked about, or when YouTube suggests another video saying "You May Also Like This" are all powered by machine learning.
 
 ### What is Machine Learning?
-> Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised and unsupervised learning.
-
 
 > Machine learning is defined as developing systems that learn or improve performance based on the data they receive without being explicitly programmed. The term Machine Learning was first coined by Arthur Samuel in 1952 when he wrote the first IBM computer learning program for the game of checkers. As the computer played more checkers matches, it studied the moves and strategies and incorporated them into its program. Machine learning is classified into 3 categories: supervised learning, unsupervised learning, and reinforcement learning. In this module, we will focus on supervised learning.
 
