@@ -15,11 +15,11 @@ output:
 
 ## Objectives
 
-> The objective of this module is to demonstrate an applied example of machine learning via logistic regression. This module contains exercises to provide opportunities to apply machine learning.
->
-> To complete this module, one is expected to have prior knowledge/familiarity with R syntax and logistic regression.
-> 
-> The objective of our machine learning module is to predict outcomes.
+The objective of this module is to demonstrate an applied example of machine learning via logistic regression. This module contains exercises to provide opportunities to apply machine learning.
+
+To complete this module, one is expected to have prior knowledge/familiarity with R syntax and logistic regression.
+
+The objective of our machine learning module is to predict outcomes.
 
 <center>
 
